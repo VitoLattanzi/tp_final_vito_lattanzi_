@@ -23,6 +23,32 @@ export class ServerError extends CustomError {
   constructor(message = 'Internal Server Error') { super(message, 500); }
 }
 
+export const errorHandler = (err, _req, res, _next) => {
+  // express-validator support (si lo usás más adelante)
+  if (err?.errors && Array.isArray(err.errors)) {
+    const messages = err.errors.map(e => e.msg || e.message || String(e));
+    return res.status(400).json({ error: 'Validation error', details: messages });
+  }
+
+  const status = Number.isInteger(err?.status) ? err.status : 500;
+  const payload = {
+    error: err?.message || 'Unexpected error',
+  };
+
+  // log básico
+  if (status >= 500) {
+    console.error('[SERVER ERROR]', err);
+  } else {
+    console.warn('[CLIENT ERROR]', payload);
+  }
+
+  res.status(status).json(payload);
+};
+export const notFoundHandler = (_req, res, _next) => {
+  res.status(404).json({ error: 'Not Found' });
+};
+
+
 // helper opcional para envolver controladores async y evitar try/catch en cada uno
 export const handleAsync = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
