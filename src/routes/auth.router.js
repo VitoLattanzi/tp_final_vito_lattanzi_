@@ -21,8 +21,19 @@ function validateRequest(schema) {
 
 const authRouter = Router();
 
-authRouter.post("/register", validateRequest(registerSchema), AuthController.register);
-authRouter.get("/verify-email/:verification_token", AuthController.verifyEmail);
-authRouter.post("/login", validateRequest(loginSchema), AuthController.login);
+authRouter.post(
+  "/register", 
+  validateRequest(registerSchema), 
+  AuthController.register
+);
+authRouter.get(
+  "/verify-email/:verification_token", 
+  AuthController.verifyEmail
+);
+authRouter.post(
+  "/login", 
+  validateRequest(loginSchema), 
+  AuthController.login
+);
 
 export default authRouter;
