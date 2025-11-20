@@ -10,7 +10,7 @@ import connectToMongoDB from './config/configMongoDB.config.js';
 
 // Routers
 import authRouter from './routes/auth.router.js';
-// import habitRouter from './routes/habit.router.js';
+import habitRouter from './routes/habit.router.js';
 // import entryRouter from './routes/entry.router.js';
 // import statsRouter from './routes/stats.router.js';
 // import settingsRouter from './routes/settings.router.js';
@@ -43,7 +43,7 @@ app.get('/', (_req, res) => {
 
 // Rutas de la API
 app.use('/api/auth', authRouter);
-// app.use('/api/habits', habitRouter);
+app.use('/api/habits', habitRouter);
 // app.use('/api/entries', entryRouter);
 // app.use('/api/stats', statsRouter);
 // app.use('/api/settings', settingsRouter);

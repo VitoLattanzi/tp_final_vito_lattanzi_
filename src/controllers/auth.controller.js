@@ -39,11 +39,18 @@ class AuthController {
   static async login(request, response) {
     try {
       const { email, password } = request.body;
-      const token = await AuthService.login(email, password);
-      return response.status(200).json({ ok: true, ...token });
+
+      const { token, user } = await AuthService.login(email, password);
+
+      return response.status(200).json({
+        ok: true,
+        token,
+        user,
+      });
     } catch (error) {
       const status = error?.status || 500;
       console.error("ERROR LOGIN:", error);
+
       return response.status(status).json({
         ok: false,
         message: error?.message || "Error interno del servidor",

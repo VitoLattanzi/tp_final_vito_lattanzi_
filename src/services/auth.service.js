@@ -44,7 +44,7 @@ class AuthService {
       }
       throw error;
     }
-    console.log('🔗 VERIFY (DEV):', `${ENVIRONMENT.URL_BACKEND}/api/auth/verify-email/${verification_token}`);
+    console.log('VERIFY (DEV):', `${ENVIRONMENT.URL_BACKEND}/api/auth/verify-email/${verification_token}`);
 
   }
   
@@ -56,13 +56,20 @@ class AuthService {
     const is_same_password = await bcrypt.compare(password, user_found.password);
     if (!is_same_password) throw new ServerError(401, "Contraseña invalida");
 
-    const auth_token = jwt.sign(
+    const token = jwt.sign(
       { name: user_found.name, email: user_found.email, id: user_found._id },
       ENVIRONMENT.JWT_SECRET,
       { expiresIn: "24h" }
     );
 
-    return { auth_token };
+    return {
+      token,
+      user: {
+        _id: user_found._id,
+        name: user_found.name,
+        email: user_found.email,
+      },
+    };
   }
 }
 
