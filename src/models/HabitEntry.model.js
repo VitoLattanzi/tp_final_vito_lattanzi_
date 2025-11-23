@@ -1,3 +1,4 @@
+
 import { Schema, model } from "mongoose";
 
 // modelo de la carga diaria de los habitos

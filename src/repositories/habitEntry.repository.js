@@ -48,6 +48,14 @@ class HabitEntryRepository {
             throw error;
         }
     }
+
+    static async getBetween(habitId, startDate, endDate) {
+        return HabitEntry.find({
+            habitId,
+            date: { $gte: startDate, $lte: endDate },
+        }).sort({ date: 1 });
+    }
+
 }
 
 export default HabitEntryRepository;
