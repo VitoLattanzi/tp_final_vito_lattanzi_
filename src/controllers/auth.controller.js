@@ -22,17 +22,21 @@ class AuthController {
 
   static async verifyEmail(request, response) {
     try {
-      const { verification_token } = request.params;
-      await AuthService.verifyEmail(verification_token);
-      const redirectUrl = `${ENVIRONMENT.URL_FRONTEND}/login?from=verified_email`;
-      return response.redirect(302, redirectUrl);
+        const { verification_token } = request.params;        
+        // 1. Intentamos verificar
+        await AuthService.verifyEmail(verification_token);
+
+        // 2. SI SALE BIEN: Redirigimos al Login con ?status=success
+        // Usamos URL_FRONTEND que definiste en el .env (ej: https://tua-app.vercel.app)
+        const redirectUrl = `${ENVIRONMENT.URL_FRONTEND}/?verified=true`;
+        return response.redirect(303, redirectUrl);
     } catch (error) {
-      const status = error?.status || 500;
-      console.error("ERROR VERIFY EMAIL:", error);
-      return response.status(status).json({
-        ok: false,
-        message: error?.message || "Error interno del servidor",
-      });
+        console.error("ERROR VERIFY EMAIL:", error);
+        
+        // 3. SI SALE MAL
+        // Redirigimos igual al front, pero avisando que falló (?verified=error)
+        const redirectUrl = `${ENVIRONMENT.URL_FRONTEND}/?verified=error`;
+        return response.redirect(303, redirectUrl);
     }
   }
 
