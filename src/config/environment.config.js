@@ -1,9 +1,7 @@
 import dotenv from 'dotenv'
 
-
 //Cargar las variables de entorno en process.env
 dotenv.config()
-
 
 //Diccionario donde guando mis variables de entorno
 const ENVIRONMENT = {

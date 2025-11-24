@@ -26,7 +26,6 @@ export class ServerError extends CustomError {
 }
 
 export const errorHandler = (err, _req, res, _next) => {
-  // express-validator support (si lo usás más adelante)
   if (err?.errors && Array.isArray(err.errors)) {
     const messages = err.errors.map(e => e.msg || e.message || String(e));
     return res.status(400).json({ error: 'Validation error', details: messages });

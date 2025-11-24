@@ -12,7 +12,7 @@ const habitEntrySchema = new Schema(
       index: true,
     },
     date: {
-      type: String, // YYYY-MM-DD, más fácil de indexar para stats
+      type: String, // YYYY-MM-DD
       required: true,
       index: true,
     },

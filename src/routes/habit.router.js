@@ -4,7 +4,7 @@ import authMiddleware from "../middleware/authMiddleware.js";
 
 const habitRouter = Router();
 
-// todos los endpoints de hábitos requieren estar logueado
+// todos los endpoints  logueado
 habitRouter.use(authMiddleware);
 
 // Habits CRUD

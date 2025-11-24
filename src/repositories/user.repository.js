@@ -4,7 +4,6 @@ import User from "../models/User.model.js";
 class UserRepository {
   static async create(name, email, password) {
     try {
-      // Mongoose usa create(), no insertOne()
       return await User.create({
         name,
         email,
