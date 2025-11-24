@@ -27,7 +27,6 @@ class AuthController {
         await AuthService.verifyEmail(verification_token);
 
         // 2. SI SALE BIEN: Redirigimos al Login con ?status=success
-        // Usamos URL_FRONTEND que definiste en el .env (ej: https://tua-app.vercel.app)
         const redirectUrl = `${ENVIRONMENT.URL_FRONTEND}/?verified=true`;
         return response.redirect(303, redirectUrl);
     } catch (error) {
